@@ -15,15 +15,14 @@ function Format (search_query,formattedAddress,latitude,longitude) {
 
 }
   
-  console.log("line 21=",longitude );
 app.get('/location', (req, res) => {
-  // let data = require('./data/geo.json');
-  //var search_query = data.results[0].address_components[0].long_name;
-  // var formattedAddress = data.results[0].formatted_address;
-  // var latitude = data.results[0].geometry.bounds.northeast.lat;
-  // var longitude = data.results[0].geometry.bounds.northeast.lng;
-  // console.log(new Format(search_query,formattedAddress,latitude,longitude));
-  // res.send(new Format(search_query,formattedAddress,latitude,longitude));
+  let data = require('./data/geo.json');
+  var search_query = data.results[0].address_components[0].long_name;
+  var formattedAddress = data.results[0].formatted_address;
+  var latitude = data.results[0].geometry.bounds.northeast.lat;
+  var longitude = data.results[0].geometry.bounds.northeast.lng;
+  console.log(new Format(search_query,formattedAddress,latitude,longitude));
+  res.send(new Format(search_query,formattedAddress,latitude,longitude));
 });
 
 //http://localhost:3000/location?data=%22what%22
