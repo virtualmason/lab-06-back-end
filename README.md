@@ -15,6 +15,6 @@ Estimate of time needed to complete: ___2_
 
 Start time: _12:30____
 
-Finish time: ____
+Finish time: ___2:08_
 
-Actual time needed to complete: _3____
+Actual time needed to complete: _1:30___
