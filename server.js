@@ -5,7 +5,6 @@ const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 app.use(cors());
-const data = require('./data/geo.json');
 
 function Format (search_query,formattedAddress,latitude,longitude) {
   this.search_query = search_query;
@@ -14,16 +13,64 @@ function Format (search_query,formattedAddress,latitude,longitude) {
   this.longitude = longitude;
 
 }
-  
+
 app.get('/location', (req, res) => {
   let data = require('./data/geo.json');
-  var search_query = data.results[0].address_components[0].long_name;
-  var formattedAddress = data.results[0].formatted_address;
-  var latitude = data.results[0].geometry.bounds.northeast.lat;
-  var longitude = data.results[0].geometry.bounds.northeast.lng;
-  console.log(new Format(search_query,formattedAddress,latitude,longitude));
+  let search_query = data.results[0].address_components[0].long_name;
+  let formattedAddress = data.results[0].formatted_address;
+  let latitude = data.results[0].geometry.bounds.northeast.lat;
+  let longitude = data.results[0].geometry.bounds.northeast.lng;
   res.send(new Format(search_query,formattedAddress,latitude,longitude));
 });
+let info = require('./data/darksky.json');
+// info.forEach(item => {
+//   console.log(item.daily);
+
+// });
+
+function Weather (forecast,time ) {
+  this.forecast = forecast;
+  this.time = time ;
+}
+app.get('/weather', (req, res) => {
+ 
+  let data = require('./data/darksky.json');
+  let forecast = info.daily.data[0].summary;
+  let time = info.daily.data[0].time;
+  console.log(new Weather(forecast, time));
+  res.send(new Weather(forecast, time));
+//1540018800
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var days =['Mon', 'Tues',  'Wed','Thurs', 'Fri', 'Sat','Sun']
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var day = days[a.getDay()];
+  var time = day +  ' ' + month + ' '+ date +' ' + year ;
+  return time;
+}
+//"Mon Jan 01 2001"
+console.log(timeConverter(0));
+
+//   [
+//     {
+//       "forecast": "Partly cloudy until afternoon.",
+//       "time": "Mon Jan 01 2001"
+//     },
+//     {
+//       "forecast": "Mostly cloudy in the morning.",
+//       "time": "Tue Jan 02 2001"
+//     },
+//     ...
+//   ]
+});
+
+
 
 //http://localhost:3000/location?data=%22what%22
 
