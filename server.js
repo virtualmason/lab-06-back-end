@@ -33,29 +33,32 @@ function Weather (forecast,time ) {
   this.time = time ;
 }
 app.get('/weather', (req, res) => {
- 
+
   let data = require('./data/darksky.json');
   let forecast = info.daily.data[0].summary;
-  let time = info.daily.data[0].time;
-  console.log(new Weather(forecast, time));
-  res.send(new Weather(forecast, time));
-//1540018800
-function timeConverter(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp * 1000);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var days =['Mon', 'Tues',  'Wed','Thurs', 'Fri', 'Sat','Sun']
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var day = days[a.getDay()];
-  var time = day +  ' ' + month + ' '+ date +' ' + year ;
-  return time;
-}
-//"Mon Jan 01 2001"
-console.log(timeConverter(0));
+  //let time = info.daily.data[0].time;
+
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var days =['Mon', 'Tues', 'Wed','Thurs', 'Fri', 'Sat','Sun'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var day = days[a.getDay()];
+    var time = day + ' ' + month + ' '+ date +' ' + year ;
+    console.log(new Weather(forecast, time));
+    res.send(new Weather(forecast, time));
+    //return time;
+  }
+  //"Mon Jan 01 2001"
+  timeConverter(0);
+  // console.log(new Weather(forecast, time));
+  // res.send(new Weather(forecast, time));
+  //1540018800
 
 //   [
 //     {
